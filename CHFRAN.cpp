@@ -189,62 +189,57 @@ void no()
   cout<<"NO"<<"\n";
 }
 //###########################################################################################
+void dega(ll arr1[], ll arr2[], ll n1,
+                             ll n2, ll arr3[])
+{
+    ll i = 0, j = 0, k = 0;
+    while (i<n1 && j <n2)
+    {
+        if (arr1[i] < arr2[j])
+            arr3[k++] = arr1[i++];
+        else
+            arr3[k++] = arr2[j++];
+    }
+    while (i < n1)
+        arr3[k++] = arr1[i++];
+
+    while (j < n2)
+        arr3[k++] = arr2[j++];
+}
 int main()
 {
 	fast
-//	clock_t launch=clock();
+	clock_t launch=clock();
 	tc
 	{
     ll n;
     cin>>n;
-    std::vector<ll> left,right,total;
+    //std::vector<ll> left,right,total;
+		ll left[n],right[n],final[2*n];
     vector<ll>::iterator lower,upper;
     lp(i,0,n)
     {
       ll x,y;
       cin>>x>>y;
-      left.pb(x);
-      right.pb(y);
-      total.pb(x);
-      total.pb(y);
+			left[i]=x;
+			right[i]=y;
     }
-    sort(left.begin(),left.end());
-    sort(right.begin(),right.end());
-    sort(total.begin(),total.end());
+
+    sort(left,left+n);
+    sort(right,right+n);
+		dega(left, right, n, n, final);
     ll ans=1000000000;
-    // p1("left")
-    // lp(i,0,n)
-    // {
-    //   cout<<left[i]<<" ";
-    // }
-    // nL
-    // p1("right")
-    // lp(i,0,n)
-    // {
-    //   cout<<right[i]<<" ";
-    // }
-    // nL
-    // p1("total")
-    // lp(i,0,2*n)
-    // {
-    //   cout<<total[i];
-    // }
-    // nL
+
     ll flag=0;
     lp(i,0,2*n)
     {  /* code */
-      upper = upper_bound(right.begin(), right.end(),total[i]+0.5 );
-      ll l_posi=upper-right.begin();
-      //p1(lower-total.begin())
-    //  p2("l_posi= ",l_posi)
-      lower = lower_bound(left.begin(), left.end(),total[i]+0.5 );
+    	ll l_position = upper_bound(right, right+n,final[i]+0.1 )-right;
+      ll r_position = lower_bound(left, left+n,final[i]+0.1 )-left;
+      r_position=n-r_position;
 
-      ll r_posi=lower-left.begin();
-      r_posi=n-r_posi;
-    //  p2("r_posi= ",r_posi)
-    if (l_posi>0 && r_posi>0 ) {
+    if (l_position>0 && r_position>0 ) {
       /* code */
-      ans=min(ans,n-(l_posi+r_posi));
+      ans=min(ans,n-(l_position+r_position));
       flag=1;
     }
 
@@ -262,7 +257,7 @@ int main()
 
 	}//tc
 
-	//clog<<((long double)(clock()-launch)/CLOCKS_PER_SEC)<<"\n";
+	clog<<((long double)(clock()-launch)/CLOCKS_PER_SEC)<<"\n";
 	return 0;
 }
 //////////*********************end of program*********************//////////
