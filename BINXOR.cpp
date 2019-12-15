@@ -14,6 +14,7 @@ using namespace std;
 #define mem(a,x) memset(a,x,sizeof(a))              //set elements of array to some value
 #define pi 3.1415926535897932384626
 #define mod 1000000007
+const int N = 1000001;
 #define vi vector<int>
 #define vii vector< vector<long long int> >
 #define vpi vector< pair<long long int,long long int> >
@@ -29,232 +30,51 @@ using namespace std;
 #define lps(v,x) (lower_bound(all(v),x)-v.begin())
 #define ups(v,x) (upper_bound(all(v),x)-v.begin())
 //#########################################################################################
-bool anagram(char *s1, char *s2)
+
+ll xx[N + 1];
+ll yy[N + 1];
+
+ll fact1[N + 1];
+
+
+void inverse(ll p)
 {
-	ll count[siz];
-    mem(count,0) ;
-    ll i;
-    for (i = 0; s1[i] && s2[i];  i++)
-    {
-        count[s1[i]]++;
-        count[s2[i]]--;
+    yy[0] = yy[1] = 1;
+    for (int i = 2; i <= N; i++)
+        yy[i] = yy[p % i] * (p - p / i) % p;
+}
+void inverse_fact1(ll p)
+{
+    xx[0] = xx[1] = 1;
+
+    for (int i = 2; i <= N; i++)
+        xx[i] = (yy[i] * xx[i - 1]) % p;
+}
+
+void facto(ll p)
+{
+    fact1[0] = 1;
+
+    for (int i = 1; i <= N; i++) {
+        fact1[i] = (fact1[i - 1] * i) % p;
     }
-    if (s1[i] || s2[i])
-    {
-      return false;
-    }
-    lp(i,0,siz)
-    {
-    	 if (count[i])
-    	 {
-    	 	 return false;
-    	 }
-    }
-     return true;
-
-}
-//###########################################################################################
-int find_largest_digit(int n)
-{
-    int mx = 0 ;
-    while(n>0)
-    {
-        mx = max(mx, n%10) ;
-        n/=10 ;
-    }
-    return mx  ;
-}
-//###########################################################################################
-ll no_of_digits(ll n)
-{
-    ll ans = 0 ;
-    while(n>0)
-    {
-        ans++ ;
-        n/=10 ;
-    }
-    return ans ;
-}
-//###########################################################################################
-// modulo Multiplication
-ll moduloMultiplication(ll  a, ll  b,  ll  zz)
-{
-    ll res = 0;
-    a %= mod;
-    while (b)
-    {
-        if (b & 1)
-            res = (res + a) % zz;
-
-        a = (2 * a) % zz;
-
-        b >>= 1;
-    }
-    return res;
-}
-//###########################################################################################
-
-ll convert(string s)
-{
-    bool o = true ;
-    ll ans = 0 ;
-    for(ll i=0;i<s.length();i++)
-    {
-        ans = ans*10 + (s[i]-48) ;
-    }
-    return ans ;
-}
-//###########################################################################################
-//function to calculate a^b under mod...
-ll powmod(ll a,ll b, ll modulo)
-{
-    if(b==0 || a==1) return 1;
-    ll half=powmod(a,(b/2),modulo) % modulo;
-    ll full = (half*half)%modulo;
-
-    if(b%2) return (full*a)%modulo;
-    return full%modulo;
-}
-//###########################################################################################
-//function to calculate inverse modulo under mod...assuming gcd is 1
-ll invmod(ll a,ll modulo)
-{
-    ll check=powmod(a,modulo-2,modulo) %modulo;
-    return check;
-}
-//###########################################################################################
-
-ll max(ll a,ll b)
-{
-  if (a>b) {
-    /* code */
-    return a;
-  }
-  return b;
-}
-//###########################################################################################
-ll min(ll a,ll b)
-{
-  if (a<b) {
-    /* code */
-    return a;
-  }
-  return b;
-}
-//###########################################################################################
-ll min(ll a,int b)
-{
-	if (a<b) return a;
-	return b;
-}
-//###########################################################################################
-ll min(int a,ll b)
-{
-	if (a<b) return a;
-	return b;
-}
-//###########################################################################################
-ll max(ll a,int b)
-{
-	if (a>b) return a;
-	return b;
-}
-//###########################################################################################
-ll max(int a,ll b)
-{
-	if (a>b) return a;
-	return b;
-}
-//###########################################################################################
-ll gcd(ll a,ll b)
-{
-	if (b==0) return a;
-	return gcd(b,a%b);
-}
-//###########################################################################################
-ll lcm(ll a,ll b)
-{
-	return a/gcd(a,b)*b;
-}
-//###########################################################################################
-void yes()
-{
-  cout<<"YES"<<"\n";
-}
-//###########################################################################################
-void no()
-{
-  cout<<"NO"<<"\n";
-}
-//###########################################################################################
-ll power(ll x, ll y, ll p)
-{
-    ll res = 1;
-
-    x = x % p;
-
-
-    while (y > 0)
-    {
-
-        if (y & 1)
-            res = (res*x) % p;
-
-
-        y = y>>1;
-        x = (x*x) % p;
-    }
-    return res;
 }
 
-
-ll modInverse(ll n, ll p)
+ll huhu(ll N, ll R, ll p)
 {
-    return power(n, p-2, p);
-}
-ll nCrModPFermat(ll n, ll r, ll p)
-{
-
-   if (r==0)
-      return 1;
-
-    ll fac[n+1];
-    fac[0] = 1;
-    for (ll i=1 ; i<=n; i++)
-        fac[i] = fac[i-1]*i%p;
-
-    return (fac[n]* modInverse(fac[r], p) % p *
-            modInverse(fac[n-r], p) % p) % p;
-}
-ll NcR(int n, int r)
-{
-
-    long long p = 1, k = 1;
-    if (n - r < r)
-        r = n - r;
-
-    if (r != 0) {
-        while (r) {
-            p *= n;
-            k *= r;
-            long long m = __gcd(p, k);
-            p /= m;
-            k /= m;
-
-            n--;
-            r--;
-        }
-
-    }
-
-    else
-        p = 1;
-  return p;
+    ll ans = ((fact1[N] * xx[R])
+              % p * xx[N - R])
+             % p;
+    return ans;
 }
 int main()
 {
 	fast
-//	clock_t launch=clock();
+	clock_t launch=clock();
+     ll p = 1000000;
+    inverse(p);
+    inverse_fact1(p);
+    facto(p);
 	tc
 	{
     ll n;
@@ -263,7 +83,7 @@ int main()
     cin>>s1;
     cin>>s2;
     ll one1=0,one2=0;
-    lp(i,0,n)
+    for (size_t i = 0; i < s1.length(); i++)
     {
       if (s1[i]=='1') {
         /* code */
@@ -274,23 +94,23 @@ int main()
         one2++;
       }
     }
-    ll sum_min=abs(one1-one2);
-    ll sum_max=one1+one2;
-    if (sum_max>n) {
+    ll min_value=abs(one1-one2);
+    ll max_value=one1+one2;
+    if (max_value>n) {
       /* code */
-      sum_max=n-(sum_max-n);
+      max_value=n-(max_value-n);
     }
     ll ans=0;
-    for (ll i = sum_min; i <= sum_max; i+=2) {
+    for (ll i = min_value; i <= max_value; i+=2) {
       /* code */
-      ans+=NcR(n,i);
+      ans+=huhu(n,i,mod)%mod;
       ans%=mod;
     }
     p1(ans)
 
 	}//tc
 
-	//clog<<((long double)(clock()-launch)/CLOCKS_PER_SEC)<<"\n";
+	clog<<((long double)(clock()-launch)/CLOCKS_PER_SEC)<<"\n";
 	return 0;
 }
 //////////*********************end of program*********************//////////
