@@ -1,4 +1,6 @@
-
+//mOzis_
+/////*31022618*/////
+//****//MONU KUMAR\\****//
 #include <bits/stdc++.h>
 using namespace std;
 #define fast ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
@@ -14,7 +16,6 @@ using namespace std;
 #define mem(a,x) memset(a,x,sizeof(a))              //set elements of array to some value
 #define pi 3.1415926535897932384626
 #define mod 1000000007
-const int N = 1000001;
 #define vi vector<int>
 #define vii vector< vector<long long int> >
 #define vpi vector< pair<long long int,long long int> >
@@ -143,6 +144,32 @@ ll min(ll a,ll b)
   return b;
 }
 //###########################################################################################
+ll min(ll a,ll b, ll c)
+{
+  if (a<b) {
+    /* code */
+    return min(a,c);
+  }
+	else
+	{
+			return min(b,c);
+	}
+
+}
+//###########################################################################################
+ll max(ll a,ll b, ll c)
+{
+  if (a<b) {
+    /* code */
+    return max(b,c);
+  }
+	else
+	{
+			return min(a,c);
+	}
+
+}
+//###########################################################################################
 ll min(ll a,int b)
 {
 	if (a<b) return a;
@@ -188,128 +215,37 @@ void no()
   cout<<"NO"<<"\n";
 }
 //###########################################################################################
-ll power(ll x, ll y, ll p)
-{
-    ll res = 1;
-
-    x = x % p;
-
-
-    while (y > 0)
-    {
-
-        if (y & 1)
-            res = (res*x) % p;
-
-
-        y = y>>1;
-        x = (x*x) % p;
-    }
-    return res;
-}
-
-
-ll modInverse(ll n, ll p)
-{
-    return power(n, p-2, p);
-}
-ll nCrModPFermat(ll n, ll r, ll p)
-{
-
-   if (r==0)
-      return 1;
-
-    ll fac[n+1];
-    fac[0] = 1;
-    for (ll i=1 ; i<=n; i++)
-        fac[i] = fac[i-1]*i%p;
-
-    return (fac[n]* modInverse(fac[r], p) % p *
-            modInverse(fac[n-r], p) % p) % p;
-}
-ll factorialNumInverse[N + 1];
-
-// array to precompute inverse of 1! to N!
-ll naturalNumInverse[N + 1];
-
-// array to store factorial of first N numbers
-ll fact[N + 1];
-
-// Function to precompute inverse of numbers
-void InverseofNumber(ll p)
-{
-    naturalNumInverse[0] = naturalNumInverse[1] = 1;
-    for (int i = 2; i <= N; i++)
-        naturalNumInverse[i] = naturalNumInverse[p % i] * (p - p / i) % p;
-}
-// Function to precompute inverse of factorials
-void InverseofFactorial(ll p)
-{
-    factorialNumInverse[0] = factorialNumInverse[1] = 1;
-
-    for (int i = 2; i <= N; i++)
-        factorialNumInverse[i] = (naturalNumInverse[i] * factorialNumInverse[i - 1]) % p;
-}
-
-// Function to calculate factorial of 1 to N
-void factorial(ll p)
-{
-    fact[0] = 1;
-
-    for (int i = 1; i <= N; i++) {
-        fact[i] = (fact[i - 1] * i) % p;
-    }
-}
-
-// Function to return nCr % p in O(1) time
-ll Binomial(ll N, ll R, ll p)
-{
-    ll ans = ((fact[N] * factorialNumInverse[R])
-              % p * factorialNumInverse[N - R])
-             % p;
-    return ans;
-}
 int main()
 {
 	fast
 //	clock_t launch=clock();
-     ll p = 1000000007;
-    InverseofNumber(p);
-    InverseofFactorial(p);
-    factorial(p);
+	// string r = s1.substr(1, 3);
+	//while(clock()<CLOCKS_PER_SEC*10)
+	//using num = modnum<int(1e9)+7>;
+ //num len = s.size();
 	tc
 	{
     ll n;
     cin>>n;
-    string s1,s2;
-    cin>>s1;
-    cin>>s2;
-    ll one1=0,one2=0;
+    ll a[n];
     lp(i,0,n)
     {
-      if (s1[i]=='1') {
-        /* code */
-        one1++;
-      }
-      if (s2[i]=='1') {
-        /* code */
-        one2++;
-      }
+      cin>>a[i];
     }
-    ll sum_min=abs(one1-one2);
-    ll sum_max=one1+one2;
-    if (sum_max>n) {
+    ll ans=1000000000;
+    for (size_t i = 0; i < n; i++) {
       /* code */
-      sum_max=n-(sum_max-n);
-    }
-    ll ans=0;
-    for (ll i = sum_min; i <= sum_max; i+=2) {
-      /* code */
-      ans+=Binomial(n,i,mod);
-      ans%=mod;
+      ll count=0;
+      for (size_t j = 0; j < n; j++) {
+        /* code */
+        if (a[i]!=a[j]) {
+          /* code */
+          count++;
+        }
+      }
+      ans=min(ans,count);
     }
     p1(ans)
-
 	}//tc
 
 	//clog<<((long double)(clock()-launch)/CLOCKS_PER_SEC)<<"\n";

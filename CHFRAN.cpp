@@ -214,9 +214,9 @@ int main()
 	{
     ll n;
     cin>>n;
-    //std::vector<ll> left,right,total;
+
 		ll left[n],right[n],final[2*n];
-    vector<ll>::iterator lower,upper;
+
     lp(i,0,n)
     {
       ll x,y;
