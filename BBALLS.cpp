@@ -211,6 +211,7 @@ int main()
      ll n=0,k=0,m=0,ans=0,flag=0,temp=0,f1=0,count=0,f2=0,sum=0,xx=0,minn1=big,minn2=big,maxx1=small,maxx2=small;
      cin>>n;
       xx=1;
+      //	cout << __builtin_popcountll(n) - 1 << '\n';
      for (ll i = 60; i >= 0; i--) {
        /* code */
        xx=1;
