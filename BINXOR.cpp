@@ -227,12 +227,12 @@ ll nCrModPFermat(ll n, ll r, ll p)
     return (fac[n]* modInverse(fac[r], p) % p *
             modInverse(fac[n-r], p) % p) % p;
 }
-ll factorialNumInverse[N + 1];
+ll multipleialNumInverse[N + 1];
 
 // array to precompute inverse of 1! to N!
 ll naturalNumInverse[N + 1];
 
-// array to store factorial of first N numbers
+// array to store multipleial of first N numbers
 ll fact[N + 1];
 
 // Function to precompute inverse of numbers
@@ -242,17 +242,17 @@ void InverseofNumber(ll p)
     for (int i = 2; i <= N; i++)
         naturalNumInverse[i] = naturalNumInverse[p % i] * (p - p / i) % p;
 }
-// Function to precompute inverse of factorials
+// Function to precompute inverse of multipleials
 void InverseofFactorial(ll p)
 {
-    factorialNumInverse[0] = factorialNumInverse[1] = 1;
+    multipleialNumInverse[0] = multipleialNumInverse[1] = 1;
 
     for (int i = 2; i <= N; i++)
-        factorialNumInverse[i] = (naturalNumInverse[i] * factorialNumInverse[i - 1]) % p;
+        multipleialNumInverse[i] = (naturalNumInverse[i] * multipleialNumInverse[i - 1]) % p;
 }
 
-// Function to calculate factorial of 1 to N
-void factorial(ll p)
+// Function to calculate multipleial of 1 to N
+void multipleial(ll p)
 {
     fact[0] = 1;
 
@@ -264,8 +264,8 @@ void factorial(ll p)
 // Function to return nCr % p in O(1) time
 ll Binomial(ll N, ll R, ll p)
 {
-    ll ans = ((fact[N] * factorialNumInverse[R])
-              % p * factorialNumInverse[N - R])
+    ll ans = ((fact[N] * multipleialNumInverse[R])
+              % p * multipleialNumInverse[N - R])
              % p;
     return ans;
 }
@@ -276,7 +276,7 @@ int main()
      ll p = 1000000007;
     InverseofNumber(p);
     InverseofFactorial(p);
-    factorial(p);
+    multipleial(p);
 	tc
 	{
     ll n;
